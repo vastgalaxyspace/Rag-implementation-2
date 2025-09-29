@@ -1,12 +1,57 @@
-```mermaid
-flowchart TD
-    A[Documents (PDF/DOCX/TXT)] --> B[Load & Read Documents]
-    B --> C[Split into Chunks<br/>(RecursiveCharacterTextSplitter)]
-    C --> D[Generate Embeddings<br/>(all-MiniLM-L6-v2)]
-    D --> E[Store in Vector DB<br/>(ChromaDB)]
+                ┌─────────────────────────┐
+                │   Documents (PDF/DOCX/TXT) 
+                └─────────────┬───────────┘
+                              │
+                              ▼
+                ┌─────────────────────────┐
+                │ Load & Read Documents   │
+                └─────────────┬───────────┘
+                              │
+                              ▼
+                ┌─────────────────────────┐
+                │ Split into Chunks       │
+                │ (RecursiveCharacterText │
+                │ Splitter)               │
+                └─────────────┬───────────┘
+                              │
+                              ▼
+                ┌─────────────────────────┐
+                │ Generate Embeddings      │
+                │ (all-MiniLM-L6-v2)       │
+                └─────────────┬───────────┘
+                              │
+                              ▼
+                ┌─────────────────────────┐
+                │ Store in Vector DB       │
+                │ (ChromaDB)               │
+                └─────────────────────────┘
 
-    E --> F[User enters a Question]
-    F --> G[Retrieve Top-k Chunks<br/>(similarity_search)]
-    G --> H[Build Prompt with<br/>Context + Question]
-    H --> I[Local LLM (distilgpt2)<br/>Generate Answer]
-    I --> J[Show Context & Answer]
+                ─────────────── Query Stage ───────────────
+                              │
+                              ▼
+                ┌─────────────────────────┐
+                │ User enters a Question  │
+                └─────────────┬───────────┘
+                              │
+                              ▼
+                ┌─────────────────────────┐
+                │ Retrieve Top-k Chunks   │
+                │ (similarity_search)     │
+                └─────────────┬───────────┘
+                              │
+                              ▼
+                ┌─────────────────────────┐
+                │ Build Prompt with       │
+                │ Context + Question      │
+                └─────────────┬───────────┘
+                              │
+                              ▼
+                ┌─────────────────────────┐
+                │ Local LLM (distilgpt2)  │
+                │ Generate Answer         │
+                └─────────────┬───────────┘
+                              │
+                              ▼
+                ┌─────────────────────────┐
+                │ Show Context & Answer   │
+                └─────────────────────────┘
